@@ -1,0 +1,5 @@
+<launch>    
+    <node name='manipulator_vrep_node' pkg='manipulator_vrep' type="manipulator_vrep.py" >
+       
+    </node>
+</launch>
