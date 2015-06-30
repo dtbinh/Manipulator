@@ -1,0 +1,275 @@
+<?xml version="1.0"?>
+
+<robot name="manipulator" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+<xacro:include filename="$(find 3DOF)/model/link_dimensions.xacro" />
+<xacro:include filename="$(find 3DOF)/model/physics.xacro" />
+
+<link name="base_link">
+    <visual>
+      <origin xyz="0 0 0"/>
+	   <geometry>
+	     <box size="0.05 0.05 ${HEIGHT}" />
+	   </geometry>	
+	   <material name="blue" />
+    </visual>
+    <collision>
+      <geometry>
+        <!--<box size="0.2 0.1 0.05" />-->
+        <box size="0.05 0.05 0.05" />
+      </geometry>
+    </collision>
+    <inertial>
+        <origin xyz="0 0 0" rpy="0 0 0" />
+        <mass value="1000000.0" />
+        <inertia
+            ixx="${ixx}" ixy="${ixy}" ixz="${ixz}"
+                 iyy="${iyy}" iyz="${iyz}"
+                 izz="${izz}" />
+        </inertial>
+</link>
+
+<joint name="joint1_fixed" type="fixed">
+		<axis xyz="0 0 1"/>
+		<parent link="base_link"/>
+		<child link="cylinder1"/>
+		<origin rpy="0.0 0.0 0.0" xyz="0.025 0 0"/>
+		<limit effort="${effort}" velocity="${velocity}" lower="${lower_bound}" upper="${upper_bound}"/>
+                <dynamics damping="${damping}" />
+</joint>
+
+<link name="cylinder1">
+		<visual>
+			<origin rpy="0.0 0.0 0.0" xyz="${RADIUS} 0 0"/>
+			<geometry>
+				<cylinder length="${HEIGHT}" radius="${RADIUS}" />
+			</geometry>
+			<material name="green">
+				<color rgba="0 .8 0 1"/>
+			</material>
+		</visual>
+		<collision>
+			<origin rpy="0.0 0.0 0.0" xyz="${RADIUS} 0 0"/>
+			<geometry>
+				<cylinder length="${HEIGHT}" radius="${RADIUS}" />
+			</geometry>
+		</collision>
+                <inertial>
+                        <origin xyz="0 0 0" rpy="0 0 0"/>
+                        <mass value="${coxa_mass}" />
+                        <inertia ixx="${ixx}" ixy="${ixy}" ixz="${ixz}"
+                 iyy="${iyy}" iyz="${iyz}"
+                 izz="${izz}" />
+                </inertial>
+</link>
+
+<joint name="joint1" type="revolute">
+		<axis xyz="0 0 1"/>
+		<parent link="cylinder1"/>
+		<child link="link1"/>
+		<origin rpy="0.0 0.0 0.0" xyz="${2.0 * RADIUS} 0 0"/>
+		<limit effort="${effort}" velocity="${velocity}" lower="${lower_bound}" upper="${upper_bound}"/>
+                <dynamics damping="${damping}" />
+</joint>
+
+
+<link name="link1">
+		<visual>
+			<origin rpy="0.0 0.0 0.0" xyz="${LENGTH / 2.0} 0 0"/>
+			<geometry>
+			        <box size="${LENGTH} ${WIDTH} ${HEIGHT}" />
+			</geometry>
+			<material name="green">
+				<color rgba="0 .8 0 1"/>
+			</material>
+		</visual>
+		<collision>
+			<origin rpy="0.0 0.0 0.0" xyz="${0.01 + (LENGTH / 2.0)} 0 0"/>
+			<geometry>
+				<box size="${LENGTH} ${WIDTH} ${HEIGHT}" />
+			</geometry>
+		</collision>
+                <inertial>
+                        <origin xyz="0 0 0" rpy="0 0 0"/>
+                        <mass value="${coxa_mass}" />
+                        <inertia ixx="${ixx}" ixy="${ixy}" ixz="${ixz}"
+                 iyy="${iyy}" iyz="${iyz}"
+                 izz="${izz}" />
+                </inertial>
+</link>
+
+
+<joint name="joint2_fixed" type="fixed">
+		<axis xyz="0 0 1"/>
+		<parent link="link1"/>
+		<child link="cylinder2"/>
+		<origin rpy="0.0 0.0 0.0" xyz="${LENGTH} 0 0"/>
+		<limit effort="${effort}" velocity="${velocity}" lower="${lower_bound}" upper="${upper_bound}"/>
+                <dynamics damping="${damping}" />
+</joint>
+
+<link name="cylinder2">
+		<visual>
+			<origin rpy="0.0 0.0 0.0" xyz="${RADIUS} 0 0"/>
+			<geometry>
+				<cylinder length="${HEIGHT}" radius="${RADIUS}" />
+			</geometry>
+			<material name="green">
+				<color rgba="0 .8 0 1"/>
+			</material>
+		</visual>
+		<collision>
+			<origin rpy="0.0 0.0 0.0" xyz="${RADIUS} 0 0"/>
+			<geometry>
+				<cylinder length="${HEIGHT}" radius="${RADIUS}" />
+			</geometry>
+		</collision>
+                <inertial>
+                        <origin xyz="0 0 0" rpy="0 0 0"/>
+                        <mass value="${coxa_mass}" />
+                        <inertia ixx="${ixx}" ixy="${ixy}" ixz="${ixz}"
+                 iyy="${iyy}" iyz="${iyz}"
+                 izz="${izz}" />
+                </inertial>
+</link>
+
+<joint name="joint2" type="revolute">
+		<axis xyz="0 0 1"/>
+		<parent link="cylinder2"/>
+		<child link="link2"/>
+		<origin rpy="0.0 0.0 0.0" xyz="${2.0 * RADIUS} 0 0"/>
+		<limit effort="${effort}" velocity="${velocity}" lower="${lower_bound}" upper="${upper_bound}"/>
+                <dynamics damping="${damping}" />
+</joint>
+
+<link name="link2">
+		<visual>
+			<origin rpy="0.0 0.0 0.0" xyz="${LENGTH / 2.0} 0 0"/>
+			<geometry>
+			        <box size="${LENGTH} ${WIDTH} ${HEIGHT}" />
+			</geometry>
+			<material name="green">
+				<color rgba="0 .8 0 1"/>
+			</material>
+		</visual>
+		<collision>
+			<origin rpy="0.0 0.0 0.0" xyz="${0.01 + (LENGTH / 2.0)} 0 0"/>
+			<geometry>
+				<box size="${LENGTH} ${WIDTH} ${HEIGHT}" />
+			</geometry>
+		</collision>
+                <inertial>
+                        <origin xyz="0 0 0" rpy="0 0 0"/>
+                        <mass value="${coxa_mass}" />
+                        <inertia ixx="${ixx}" ixy="${ixy}" ixz="${ixz}"
+                 iyy="${iyy}" iyz="${iyz}"
+                 izz="${izz}" />
+                </inertial>
+</link>
+
+<!--<joint name="joint2" type="revolute">
+		<axis xyz="0 0 1"/>
+		<parent link="cylinder2"/>
+		<child link="link2"/>
+		<origin rpy="0.0 0.0 0.0" xyz="0.01 0 0"/>
+		<limit effort="${effort}" velocity="${velocity}" lower="${lower_bound}" upper="${upper_bound}"/>
+                <dynamics damping="${damping}" />
+</joint>
+
+
+<link name="link2">
+		<visual>
+			<origin rpy="0.0 0.0 0.0" xyz="${0.01 + (LENGTH / 2.0)} 0 0"/>
+			<geometry>
+			        <box size="${LENGTH} ${WIDTH} ${HEIGHT}" />
+			</geometry>
+			<material name="green">
+				<color rgba="0 .8 0 1"/>
+			</material>
+		</visual>
+		<collision>
+			<origin rpy="0.0 0.0 0.0" xyz="${0.01 + (LENGTH / 2.0)} 0 0"/>
+			<geometry>
+				<box size="${LENGTH} ${WIDTH} ${HEIGHT}" />
+			</geometry>
+		</collision>
+                <inertial>
+                        <origin xyz="0 0 0" rpy="0 0 0"/>
+                        <mass value="${coxa_mass}" />
+                        <inertia ixx="${ixx}" ixy="${ixy}" ixz="${ixz}"
+                 iyy="${iyy}" iyz="${iyz}"
+                 izz="${izz}" />
+                </inertial>
+</link>
+
+<joint name="joint2" type="revolute">
+		<axis xyz="0 0 1"/>
+		<parent link="link1"/>
+		<child link="link2"/>
+		<origin rpy="0.0 0.0 0.0" xyz="${LENGTH} 0 0"/>
+		<limit effort="${effort}" velocity="${velocity}" lower="${lower_bound}" upper="${upper_bound}"/>
+                <dynamics damping="${damping}" />
+</joint>
+
+
+<link name="link2">
+		<visual>
+			<origin rpy="0.0 0.0 0.0" xyz="${LENGTH / 2.0} 0 0"/>
+			<geometry>
+				<box size="${LENGTH} ${WIDTH} ${HEIGHT}" />
+			</geometry>
+			<material name="blue">
+				<color rgba="0 0 .8 1"/>
+			</material>
+		</visual>
+		<collision>
+			<origin rpy="0.0 0.0 0.0" xyz="${LENGTH / 2.0} 0 0"/>
+			<geometry>
+				<box size="${LENGTH} ${WIDTH} ${HEIGHT}" />
+			</geometry>
+		</collision>
+                <inertial>
+                        <origin xyz="0 0 0" rpy="0 0 0"/>
+                        <mass value="${coxa_mass}" />
+                        <inertia ixx="${ixx}" ixy="${ixy}" ixz="${ixz}"
+                 iyy="${iyy}" iyz="${iyz}"
+                 izz="${izz}" />
+                </inertial>
+</link>
+
+<joint name="joint3" type="revolute">
+		<axis xyz="0 0 1"/>
+		<parent link="link2"/>
+		<child link="link3"/>
+		<origin rpy="0.0 0.0 0.0" xyz="${LENGTH} 0 0"/>
+		<limit effort="${effort}" velocity="${velocity}" lower="${lower_bound}" upper="${upper_bound}"/>
+                <dynamics damping="${damping}" />
+</joint>
+
+
+<link name="link3">
+		<visual>
+			<origin rpy="0.0 0.0 0.0" xyz="${LENGTH / 2.0} 0 0"/>
+			<geometry>
+				<box size="${LENGTH} ${WIDTH} ${HEIGHT}" />
+			</geometry>
+			<material name="red">
+				<color rgba="0.8 0 0 1"/>
+			</material>
+		</visual>
+		<collision>
+			<origin rpy="0.0 0.0 0.0" xyz="${LENGTH / 2.0} 0 0"/>
+			<geometry>
+				<box size="${LENGTH} ${WIDTH} ${HEIGHT}" />
+			</geometry>
+		</collision>
+                <inertial>
+                        <origin xyz="0 0 0" rpy="0 0 0"/>
+                        <mass value="${coxa_mass}" />
+                        <inertia ixx="${ixx}" ixy="${ixy}" ixz="${ixz}"
+                 iyy="${iyy}" iyz="${iyz}"
+                 izz="${izz}" />
+                </inertial>
+</link>-->
+
+</robot>

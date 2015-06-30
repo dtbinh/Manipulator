@@ -1,0 +1,6 @@
+<launch>  
+    <include file="$(find manipulator_vrep)/launch/manipulator_vrep.launch" />  
+    <node name='manipulator_test_node' pkg='manipulator_test' type="manipulator_test.py" >
+       
+    </node>
+</launch>

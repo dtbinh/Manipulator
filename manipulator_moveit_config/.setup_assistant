@@ -1,0 +1,8 @@
+moveit_setup_assistant_config:
+  URDF:
+    package: 3DOF
+    relative_path: model/model.urdf
+  SRDF:
+    relative_path: config/manipulator.srdf
+  CONFIG:
+    generated_timestamp: 1435563598
